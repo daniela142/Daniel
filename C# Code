@@ -1,0 +1,400 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace HangmanGame
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        bool debugMode = false;
+
+        int guessedWrong;
+        int guessedRight;
+
+        static string createRandomWord()
+        {
+            string[] randomWords = new string[45];
+            randomWords[0] = "abilities";
+            randomWords[1] = "culture";
+            randomWords[2] = "hallmark";
+            randomWords[3] = "principles";
+            randomWords[4] = "strategies";
+            randomWords[5] = "academic";
+            randomWords[6] = "curriculum";
+            randomWords[7] = "help";
+            randomWords[8] = "priorities";
+            randomWords[9] = "student";
+            randomWords[10] = "accurate";
+            randomWords[11] = "decision";
+            randomWords[12] = "making";
+            randomWords[13] = "holistic";
+            randomWords[14] = "problem";
+            randomWords[15] = "solving";
+            randomWords[16] = "student";
+            randomWords[17] = "centered";
+            randomWords[18] = "achievement";
+            randomWords[19] = "dedicated";
+            randomWords[20] = "identify";
+            randomWords[21] = "procedures";
+            randomWords[22] = "student";
+            randomWords[23] = "performance";
+            randomWords[24] = "acknowledging";
+            randomWords[25] = "deliver";
+            randomWords[26] = "implement";
+            randomWords[27] = "process";
+            randomWords[28] = "students";
+            randomWords[29] = "aspirations";
+            randomWords[30] = "diversity";
+            randomWords[31] = "information";
+            randomWords[32] = "purpose";
+            randomWords[33] = "timely";
+            randomWords[34] = "assist";
+            randomWords[35] = "document";
+            randomWords[36] = "empower";
+            randomWords[37] = "potential";
+            randomWords[38] = "stakeholders";
+            randomWords[39] = "cultivate";
+            randomWords[40] = "create";
+            randomWords[41] = "emotional";
+            randomWords[42] = "involvement";
+            randomWords[43] = "policies";
+            randomWords[44] = "skills";
+
+            Random rnd = new Random();
+            int selectedInt = rnd.Next(0, randomWords.Length);
+
+            string selectedWord = randomWords[selectedInt];
+            return selectedWord;
+        }
+
+        private void lblTitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBegin_Click(object sender, EventArgs e)
+        {
+            guessedWrong = 0;
+            guessedRight = 0;
+            
+            lblTitle.Visible = false;
+            btnBegin.Visible = false;
+
+            picHangman.Visible = true;
+
+            Button[] objArray1 = new Button[26];
+            objArray1[0] = btnA;
+            objArray1[1] = btnB;
+            objArray1[2] = btnC;
+            objArray1[3] = btnD;
+            objArray1[4] = btnE;
+            objArray1[5] = btnF;
+            objArray1[6] = btnG;
+            objArray1[7] = btnH;
+            objArray1[8] = btnI;
+            objArray1[9] = btnJ;
+            objArray1[10] = btnK;
+            objArray1[11] = btnL;
+            objArray1[12] = btnM;
+            objArray1[13] = btnN;
+            objArray1[14] = btnO;
+            objArray1[15] = btnP;
+            objArray1[16] = btnQ;
+            objArray1[17] = btnR;
+            objArray1[18] = btnS;
+            objArray1[19] = btnT;
+            objArray1[20] = btnU;
+            objArray1[21] = btnV;
+            objArray1[22] = btnW;
+            objArray1[23] = btnX;
+            objArray1[24] = btnY;
+            objArray1[25] = btnZ;
+
+            PictureBox[] objArray2 = new PictureBox[11];
+            objArray2[0] = pic1;
+            objArray2[1] = pic2;
+            objArray2[2] = pic3;
+            objArray2[3] = pic4;
+            objArray2[4] = pic5;
+            objArray2[5] = pic6;
+            objArray2[6] = pic7;
+            objArray2[7] = pic8;
+            objArray2[8] = pic9;
+            objArray2[9] = pic10;
+            objArray2[10] = pic11;
+
+            PictureBox[] objArray3 = new PictureBox[16];
+            objArray3[0] = line1;
+            objArray3[1] = line2;
+            objArray3[2] = line3;
+            objArray3[3] = line4;
+            objArray3[4] = line5;
+            objArray3[5] = line6;
+            objArray3[6] = line7;
+            objArray3[7] = line8;
+            objArray3[8] = line9;
+            objArray3[9] = line10;
+            objArray3[10] = line11;
+            objArray3[11] = line12;
+            objArray3[12] = line13;
+            objArray3[13] = line14;
+            objArray3[14] = line15;
+            objArray3[15] = line16;
+
+            Label[] objArray4 = new Label[16];
+            objArray4[0] = lbl1;
+            objArray4[1] = lbl2;
+            objArray4[2] = lbl3;
+            objArray4[3] = lbl4;
+            objArray4[4] = lbl5;
+            objArray4[5] = lbl6;
+            objArray4[6] = lbl7;
+            objArray4[7] = lbl8;
+            objArray4[8] = lbl9;
+            objArray4[9] = lbl10;
+            objArray4[10] = lbl11;
+            objArray4[11] = lbl12;
+            objArray4[12] = lbl13;
+            objArray4[13] = lbl14;
+            objArray4[14] = lbl15;
+            objArray4[15] = lbl16;
+            
+            for (int i = 0; i < objArray1.Length; i++)
+            {
+                objArray1[i].Visible = true;
+                
+            }
+
+            for (int i = 0; i < objArray2.Length; i++)
+            {
+                objArray2[i].Visible = true;
+                objArray2[i].BringToFront();
+            }
+
+            string result = createRandomWord();
+            if (debugMode)
+            {
+                lblDebugWord.Text = result;
+                lblDebugWord.Visible = true;
+            }
+            else
+            {
+                lblDebugWord.Text = result;
+                lblDebugWord.Visible = false;
+            }
+            
+
+            char[] resultCharArray = result.ToCharArray();
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                objArray3[i].Visible = true;
+                objArray4[i].Text = resultCharArray[i].ToString();
+            }
+        }
+
+        private void btn_Click(object sender, EventArgs e)
+        {
+            (sender as Button).Visible = false;
+
+            string inputText = (sender as Button).Text;
+            
+            char[] resultCharArray = lblDebugWord.Text.ToCharArray();
+
+            Button[] objArray1 = new Button[26];
+            objArray1[0] = btnA;
+            objArray1[1] = btnB;
+            objArray1[2] = btnC;
+            objArray1[3] = btnD;
+            objArray1[4] = btnE;
+            objArray1[5] = btnF;
+            objArray1[6] = btnG;
+            objArray1[7] = btnH;
+            objArray1[8] = btnI;
+            objArray1[9] = btnJ;
+            objArray1[10] = btnK;
+            objArray1[11] = btnL;
+            objArray1[12] = btnM;
+            objArray1[13] = btnN;
+            objArray1[14] = btnO;
+            objArray1[15] = btnP;
+            objArray1[16] = btnQ;
+            objArray1[17] = btnR;
+            objArray1[18] = btnS;
+            objArray1[19] = btnT;
+            objArray1[20] = btnU;
+            objArray1[21] = btnV;
+            objArray1[22] = btnW;
+            objArray1[23] = btnX;
+            objArray1[24] = btnY;
+            objArray1[25] = btnZ;
+
+            PictureBox[] objArray2 = new PictureBox[11];
+            objArray2[0] = pic1;
+            objArray2[1] = pic2;
+            objArray2[2] = pic3;
+            objArray2[3] = pic4;
+            objArray2[4] = pic5;
+            objArray2[5] = pic6;
+            objArray2[6] = pic7;
+            objArray2[7] = pic8;
+            objArray2[8] = pic9;
+            objArray2[9] = pic10;
+            objArray2[10] = pic11;
+
+            PictureBox[] objArray3 = new PictureBox[16];
+            objArray3[0] = line1;
+            objArray3[1] = line2;
+            objArray3[2] = line3;
+            objArray3[3] = line4;
+            objArray3[4] = line5;
+            objArray3[5] = line6;
+            objArray3[6] = line7;
+            objArray3[7] = line8;
+            objArray3[8] = line9;
+            objArray3[9] = line10;
+            objArray3[10] = line11;
+            objArray3[11] = line12;
+            objArray3[12] = line13;
+            objArray3[13] = line14;
+            objArray3[14] = line15;
+            objArray3[15] = line16;
+
+            Label[] objArray4 = new Label[16];
+            objArray4[0] = lbl1;
+            objArray4[1] = lbl2;
+            objArray4[2] = lbl3;
+            objArray4[3] = lbl4;
+            objArray4[4] = lbl5;
+            objArray4[5] = lbl6;
+            objArray4[6] = lbl7;
+            objArray4[7] = lbl8;
+            objArray4[8] = lbl9;
+            objArray4[9] = lbl10;
+            objArray4[10] = lbl11;
+            objArray4[11] = lbl12;
+            objArray4[12] = lbl13;
+            objArray4[13] = lbl14;
+            objArray4[14] = lbl15;
+            objArray4[15] = lbl16;
+
+            bool isCorrect = false;
+            for (int i = 0; i < lblDebugWord.Text.Length; i++)
+            {
+                if (inputText.Equals(resultCharArray[i].ToString()))
+                {
+                    isCorrect = true;
+                    break;
+                }
+            }
+
+            if (isCorrect)
+            {
+                for (int i = 0; i < lblDebugWord.Text.Length; i++)
+                {
+                    if (inputText.Equals(resultCharArray[i].ToString()))
+                    {
+                        objArray4[i].Visible = true;
+                        guessedRight += 1;
+                    }
+                }
+
+                if (guessedRight >= lblDebugWord.Text.Length)
+                {
+                    for (int i = 0; i < objArray1.Length; i++)
+                    {
+                        objArray1[i].Visible = false;
+
+                    }
+
+                    for (int i = 0; i < objArray2.Length; i++)
+                    {
+                        objArray2[i].Visible = false;
+                    }
+
+                    for (int i = 0; i < objArray3.Length; i++)
+                    {
+                        objArray3[i].Visible = false;
+
+                    }
+
+                    for (int i = 0; i < objArray4.Length; i++)
+                    {
+                        objArray4[i].Visible = false;
+                    }
+
+                    lblEndGame.Text = "YOU WIN!";
+                    lblEndGame.Visible = true;
+
+                    string wordAnswer = lblDebugWord.Text;
+                    lblDebugWord.Text = ("The word was " + wordAnswer);
+                    lblDebugWord.Visible = true;
+
+                    picHangman.Visible = false;
+
+                    btnRestart.Visible = true;
+                }
+            }
+            else
+            {
+                objArray2[guessedWrong].Visible = false;
+                guessedWrong += 1;
+
+                if (guessedWrong >= 11)
+                {
+                    for (int i = 0; i < objArray1.Length; i++)
+                    {
+                        objArray1[i].Visible = false;
+
+                    }
+
+                    for (int i = 0; i < objArray2.Length; i++)
+                    {
+                        objArray2[i].Visible = false;
+                    }
+
+                    for (int i = 0; i < objArray3.Length; i++)
+                    {
+                        objArray3[i].Visible = false;
+
+                    }
+
+                    for (int i = 0; i < objArray4.Length; i++)
+                    {
+                        objArray4[i].Visible = false;
+                    }
+
+                    lblEndGame.Text = "YOU LOSE!";
+                    lblEndGame.Visible = true;
+
+                    string wordAnswer = lblDebugWord.Text;
+                    lblDebugWord.Text = ("The word was " + wordAnswer);
+                    lblDebugWord.Visible = true;
+
+                    btnRestart.Visible = true;
+                }
+            }
+        }
+
+        private void btnRestart_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
