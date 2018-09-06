@@ -1,0 +1,101 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace BMICalculator
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void txbHeight_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txbWeight_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void btnCalculate_Click(object sender, EventArgs e)
+        {
+
+            double weightInt = Convert.ToDouble(txbWeight.Text);
+            double heightInt = Convert.ToDouble(txbHeight.Text);
+
+            double bmiAlgorithm = weightInt / (Math.Pow(heightInt, 2));
+            double bmiRounded = Math.Round(bmiAlgorithm, 1);
+
+            lblResultQuantatative.Visible = true;
+            lblResultQualatative.Visible = true;
+
+            picUnderweight.Visible = false;
+            picHealthyweight.Visible = false;
+            picOverweight.Visible = false;
+            picObese.Visible = false;
+
+            lblResultQuantatative.Text = ("BMI: " + Convert.ToString(bmiRounded));
+
+            if (bmiAlgorithm < 18.5)
+            {
+                lblResultQualatative.Text = "Underweight";
+                picUnderweight.Visible = true;
+            }
+            else
+            {
+                if (bmiAlgorithm >= 18.5 && bmiAlgorithm <= 24.9)
+                {
+                    lblResultQualatative.Text = "Healthyweight";
+                    picHealthyweight.Visible = true;
+                }
+                else
+                {
+                    if (bmiAlgorithm > 24.9 && bmiAlgorithm <= 29.9)
+                    {
+                        lblResultQualatative.Text = "Overweight";
+                        picOverweight.Visible = true;
+                    }
+                    else
+                    {
+                        if (bmiAlgorithm >= 30)
+                        {
+                            lblResultQualatative.Text = "Obese";
+                            picObese.Visible = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
