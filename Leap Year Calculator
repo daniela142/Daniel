@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LeapYearCalculator
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.Clear();
+
+                int year;
+                Console.Write("Please enter a year: ");
+
+                string yearString = Console.ReadLine();
+
+                bool isNumeric = int.TryParse(yearString, out int n);
+
+                if (isNumeric == true)
+                {
+                    year = Convert.ToInt32(yearString);
+
+                    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+                    {
+                        Console.WriteLine(year + " is a leap year.");
+                    }
+                    else
+                    {
+                        Console.WriteLine(year + " is not a leap year.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter an integer value.");
+                }
+                Console.WriteLine("Press ENTER to continue.");
+                Console.ReadLine();
+            }
+        }
+    }
+}
