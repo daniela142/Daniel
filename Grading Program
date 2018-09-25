@@ -1,0 +1,98 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Excel = Microsoft.Office.Interop.Excel;
+
+namespace GradingProgram
+{
+    class Program
+    {
+        
+        static void Main(string[] args)
+        {
+            Excel.Application excelApp = new Excel.Application();
+            Excel.Workbook excelWorkBook = excelApp.Workbooks.Open(@"W:\Year 10 2018\Information Software & Technology\VS2017\Semester2Projects\GradingProgram\Results.xlsx");
+            Excel.Worksheet excelWorkSheet = excelWorkBook.Worksheets["Sheet1"];
+            Excel.Range colRange = excelWorkSheet.UsedRange;
+
+            int rowCount = colRange.Rows.Count;
+            int colCount = colRange.Columns.Count;
+
+            int amountFailed = 0;
+            int amountPassed = 0;
+            int amountCredit = 0;
+            int amountDistinction = 0;
+            int amountHD = 0;
+
+            Console.Write("Student: Mark: Result:");
+
+            for (int i = 1; i <= rowCount; i++)
+            {
+                for (int i2 = 1; i2 <= colCount; i2++)
+                {
+                    if (i2 == 1)
+                    Console.Write("\r\n");
+                    
+                    if (colRange.Cells[i, i2] != null && colRange.Cells[i, i2].Value2 != null)
+                    Console.Write(colRange.Cells[i, i2].Value2.ToString() + "\t");
+                    
+                    if (i2 == 2)
+                    {
+                        string grade = excelWorkSheet.Cells[i, 2].Value.ToString();
+
+                        if (Convert.ToInt32(grade) < 50)
+                        {
+                            Console.WriteLine("FAIL");
+                            amountFailed = amountFailed + 1;
+                        }
+                        else
+                        {
+                            if (Convert.ToInt32(grade) >= 50 && Convert.ToInt32(grade) < 65)
+                            {
+                                Console.WriteLine("PASS");
+                                amountPassed = amountPassed + 1;
+                            }
+                            else
+                            {
+                                if (Convert.ToInt32(grade) >= 65 && Convert.ToInt32(grade) < 75)
+                                {
+                                    Console.WriteLine("CREDIT");
+                                    amountCredit = amountCredit + 1;
+                                }
+                                else
+                                {
+                                    if (Convert.ToInt32(grade) >= 75 && Convert.ToInt32(grade) < 85)
+                                    {
+                                        Console.WriteLine("DISTINCTION");
+                                        amountDistinction = amountDistinction + 1;
+                                    }
+                                    else
+                                    {
+                                        if (Convert.ToInt32(grade) >= 85)
+                                        {
+                                            Console.WriteLine("HIGH DISTINCTION");
+                                            amountHD = amountHD + 1;
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            Console.Write("\r\n");
+
+            Console.WriteLine(amountFailed + " Failed");
+            Console.WriteLine(amountPassed + " Passed");
+            Console.WriteLine(amountCredit + " Got Credit");
+            Console.WriteLine(amountDistinction + " Got Disctinction");
+            Console.WriteLine(amountHD + " Got High Distinction");
+            Console.ReadLine();
+        }
+    }
+}
